@@ -1,6 +1,5 @@
 package com.fortech.elasticSearchREST;
 
-
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -15,17 +14,22 @@ import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-
 import com.fortech.elasticSearchREST.model.Vehicle;
 import com.fortech.elasticSearchREST.persistance.VehicleDAO;
 import com.fortech.elasticSearchREST.persistance.VehicleDAOImpl;
 
+/**
+ *  Resource (exposed at "vehicle" path)
+ * This class provide RESTful Web services for MySQL 
+ * Get and Post methods for CRUD operations.
+ * 
+ * @author andreig.muresan
+ *
+ */
 @Path("vehicle")
 public class VehicleResource {
 
-
 	private VehicleDAO vehicleDAO = new VehicleDAOImpl();
-
 
 	@DELETE
 	@Consumes("application/json")
@@ -86,7 +90,6 @@ public class VehicleResource {
 
 		return vehicle;
 	}
-	
 	
 	@POST
 	@Path("add")
@@ -161,7 +164,5 @@ public class VehicleResource {
 		}
 		return Response.ok().entity(vehicle).build();
 	}
-
-
 
 }

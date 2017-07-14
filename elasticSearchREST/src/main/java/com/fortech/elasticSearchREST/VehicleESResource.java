@@ -1,12 +1,8 @@
 package com.fortech.elasticSearchREST;
 
-
-
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -14,19 +10,15 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 
-import org.primefaces.component.sticky.Sticky;
-
-import com.fortech.elasticSearchREST.model.Vehicle;
 import com.fortech.elasticSearchREST.model.VehicleES;
 import com.fortech.elasticSearchREST.services.ElasticSearchService;
 import com.google.gson.Gson;
 
 /**
- * This class provides all RESTful Web Services 
+ * Resource (exposed at "elasticSearch" path)
+ * This class provides all RESTful Services for ElasticSearch 
  * CRUD operations 
  * 
  * @author andreig.muresan
@@ -37,8 +29,7 @@ import com.google.gson.Gson;
 public class VehicleESResource {
 
 	private Gson gson = new Gson();
-	ElasticSearchService elasticSearchService = new ElasticSearchService();
-
+	private ElasticSearchService elasticSearchService = new ElasticSearchService();
 
 	@DELETE
 	@Consumes("application/json")
@@ -63,8 +54,6 @@ public class VehicleESResource {
 		return Response.ok().build();
 	}
 
-
-
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -76,8 +65,6 @@ public class VehicleESResource {
 		return Response.ok().build();
 	}
 
-
-
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -88,7 +75,6 @@ public class VehicleESResource {
 		elasticSearchService.createIndex(index, type, id, gson.toJson(vehicle, VehicleES.class));
 		return Response.ok().build();
 	}
-
 
 	@GET
 	@Produces("application/json")
@@ -124,6 +110,5 @@ public class VehicleESResource {
 	public List<VehicleES> getVehicles(@PathParam("index") String index, @PathParam("type") String type) {
 		return elasticSearchService.getAllVehicles(index, type);
 	}
-
 
 }

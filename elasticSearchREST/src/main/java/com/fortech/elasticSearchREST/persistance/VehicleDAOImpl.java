@@ -10,12 +10,18 @@ import javax.persistence.Persistence;
 
 import com.fortech.elasticSearchREST.model.Vehicle;
 
+/**
+ * This class provides implementation of methods 
+ * CRUD operations for DB
+ * 
+ * @author andreig.muresan
+ *
+ */
+
 @Stateless
 public class VehicleDAOImpl implements VehicleDAO  {
 
 	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence.createEntityManagerFactory("elasticSearchREST");
-
-
 	
 	@Override
 	public void saveVehicle (long id, String brandName, String bodyType, String fuelType, String transmission,
@@ -60,7 +66,6 @@ public class VehicleDAOImpl implements VehicleDAO  {
 			manager.close();
 		}
 	}
-
 	
 	@Override
 	public void deleteVehicle(long id){
@@ -95,8 +100,6 @@ public class VehicleDAOImpl implements VehicleDAO  {
 		}
 	}
 
-
-	
 	@Override
 	public void updateVehicle(long id, String brandName, String bodyType, String fuelType, String transmission,
 			String registracionDate, String color, double price, String vehicleLocation){
@@ -142,7 +145,6 @@ public class VehicleDAOImpl implements VehicleDAO  {
 		}
 	}
 
-	
 	@Override
 	public Vehicle findVehicleById(long id){
 
@@ -178,7 +180,6 @@ public class VehicleDAOImpl implements VehicleDAO  {
 		return vehicle;	
 	}
 
-
 	@Override
 	public List<Vehicle> readAll() {
 		List<Vehicle> vehicles = null;
@@ -212,7 +213,5 @@ public class VehicleDAOImpl implements VehicleDAO  {
 		}
 		return vehicles;
 	}
-
-	
 
 }

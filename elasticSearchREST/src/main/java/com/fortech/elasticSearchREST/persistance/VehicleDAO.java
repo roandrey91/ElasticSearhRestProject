@@ -5,8 +5,6 @@ import java.util.List;
 import com.fortech.elasticSearchREST.model.Vehicle;
 
 public interface VehicleDAO {
-
-	// CRUD Operations 
 	
 	void saveVehicle(long id, String brandName, String bodyType, String fuelType, String transmission,
 			String registracionDate, String color, double price, String vehicleLocation);

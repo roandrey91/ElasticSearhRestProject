@@ -1,9 +1,11 @@
 package com.fortech.elasticSearchREST.model;
 
-
-
+/**
+ * 
+ * @author andreig.muresan
+ *
+ */
 public class VehicleES {
-
 
 	private Long id;
 	

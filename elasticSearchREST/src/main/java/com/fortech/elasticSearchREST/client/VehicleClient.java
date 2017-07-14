@@ -11,6 +11,12 @@ import javax.ws.rs.core.Response;
 
 import com.fortech.elasticSearchREST.model.Vehicle;
 
+/**
+ * This class provides REST Client for GET and POST methods.
+ * 
+ * @author andreig.muresan
+ *
+ */
 public class VehicleClient {
 
 	private Client client;
@@ -18,7 +24,6 @@ public class VehicleClient {
 	public VehicleClient() {
 		client = ClientBuilder.newClient();
 	}
-
 
 	public List<Vehicle> get() {
 		WebTarget target = client.target("http://localhost:8080/elasticSearchREST/webapi/");

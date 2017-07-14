@@ -10,23 +10,31 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.fortech.elasticSearchREST.model.Vehicle;
-import com.fortech.elasticSearchREST.model.VehicleES;
 import com.fortech.elasticSearchREST.persistance.VehicleDAO;
 import com.fortech.elasticSearchREST.persistance.VehicleDAOImpl;
-import com.fortech.elasticSearchREST.services.DbES;
-import com.fortech.elasticSearchREST.services.ElasticSearchService;
-import com.google.gson.Gson;
+import com.fortech.elasticSearchREST.services.DbESService;
+
+/**
+ * Resource (exposed at "dbes" path)
+ * 
+ * @author andreig.muresan
+ *
+ */
 
 @Path("dbes")
 public class VehicleDBElasticSearchResource {
 
-
-	DbES dbs = new DbES();
-
+	private	DbESService dbs = new DbESService();
 
 	private VehicleDAO vehicleDAOImpl = new VehicleDAOImpl();
-
-
+	
+	/**
+	 * Method handling HTTP GET requests. 
+	 * 
+	 * @param id
+	 * 		Id number.
+	 * @return Vehicle object.
+	 */
 	@GET
 	@Produces("application/json")
 	@Path("transfer/{index}/{type}/{id}")
@@ -42,6 +50,19 @@ public class VehicleDBElasticSearchResource {
 		return Response.ok().entity(vehicle).build();
 	}
 
+	/**
+	 * Method handling HTTP POST requests. Transfer data from db
+	 * to ElasticSearch.
+	 * 
+	 * @param index
+	 * 		Index name.
+	 * @param type
+	 * 		Type name.
+	 * @param id
+	 * 		Id number.
+	 * @return Response message
+	 * @throws InterruptedException
+	 */
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -53,8 +74,5 @@ public class VehicleDBElasticSearchResource {
 		dbs.transferFromDbToES(index, type, id, string);
 		return Response.ok().build();
 	}
-
-
-
 
 }

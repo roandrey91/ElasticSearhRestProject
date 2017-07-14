@@ -1,12 +1,16 @@
 package com.fortech.elasticSearchREST.model;
 
-
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
+
+/**
+ * 
+ * @author andreig.muresan
+ *
+ */
 
 @Entity
 @Table(name = "vehicle")
@@ -33,13 +37,9 @@ public class Vehicle  {
 	@Column
 	private String vehicleLocation;
 
-		
 	public Vehicle() {
 
 	}
-
-
-
 
 	public Vehicle(Long id, String brandName, String bodyType, String fuelType, String transmission,
 			String registracionDate, String color, Double price, String vehicleLocation) {
@@ -202,7 +202,6 @@ public class Vehicle  {
 				+ ", price=" + price + ", vehicleLocation=" + vehicleLocation + "]";
 	}
 
-
    public static VehicleES populate(Vehicle vehicle, String[] tags){
 	   VehicleES vehicleES = new VehicleES();
 	   vehicleES.setId(vehicle.getId());
@@ -217,14 +216,5 @@ public class Vehicle  {
 	   vehicleES.setTags(tags);
 	   return vehicleES;
    }
-
-
-
-
-
-
-
-
-
 
 }
