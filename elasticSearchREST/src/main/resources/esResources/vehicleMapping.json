@@ -1,0 +1,37 @@
+ {
+    "vehicle": {
+      "properties": {
+        "id":{
+        "type": "long"
+      },
+      "brandName": {
+        "type": "string"
+      },
+      "bodyType": {
+        "type": "string"
+      },
+      "fuelType": {
+        "type": "string"
+      },
+      "transmission": {
+        "type": "string"
+      },
+      "registracionDate": {
+        "type": "integer"
+      },
+      "color": {
+        "type": "string"
+      },
+      "price": {
+        "type": "double"
+      },
+      "vehicleLocation": {
+        "type": "string"
+      },
+      "tags": {
+        "type": "string"
+      }
+      }
+    }
+  }
+
