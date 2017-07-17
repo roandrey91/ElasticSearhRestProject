@@ -6,13 +6,11 @@ import com.fortech.elasticSearchREST.model.Vehicle;
 
 public interface VehicleDAO {
 	
-	void saveVehicle(long id, String brandName, String bodyType, String fuelType, String transmission,
-			String registracionDate, String color, double price, String vehicleLocation);
+	void saveVehicle(Vehicle vehicle);
 
 	void deleteVehicle(long id);
 
-	void updateVehicle(long id, String brandName, String bodyType, String fuelType, String transmission,
-			String registracionDate, String color, double price, String vehicleLocation);
+	void updateVehicle(Vehicle vehicle);
 
 	Vehicle findVehicleById(long id);
 	

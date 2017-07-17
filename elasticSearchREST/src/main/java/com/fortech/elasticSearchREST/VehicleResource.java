@@ -47,15 +47,15 @@ public class VehicleResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Vehicle updateVehicle(Vehicle vehicle) {
 		
-		vehicleDAO.updateVehicle(vehicle.getId(), 
-				vehicle.getBrandName(), 
-				vehicle.getBodyType(), 
-				vehicle.getFuelType(), 
-				vehicle.getTransmission(),
-				vehicle.getRegistracionDate(), 
-				vehicle.getColor(), 
-				vehicle.getPrice(), 
-				vehicle.getVehicleLocation());
+//		vehicleDAO.updateVehicle(vehicle.getId(), 
+//				vehicle.getBrandName(), 
+//				vehicle.getBodyType(), 
+//				vehicle.getFuelType(), 
+//				vehicle.getTransmission(),
+//				vehicle.getRegistracionDate(), 
+//				vehicle.getColor(), 
+//				vehicle.getPrice(), 
+//				vehicle.getVehicleLocation());
 		
 		return vehicle;
 	}
@@ -65,28 +65,28 @@ public class VehicleResource {
 	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Vehicle updateVehicleParams(MultivaluedHashMap<String, String> formParams) {
-
+//
 		Vehicle vehicle = new Vehicle();
-
-		vehicle.setId(Long.parseLong(formParams.getFirst("id")));
-		vehicle.setBrandName(formParams.getFirst("brandName"));
-		vehicle.setBodyType(formParams.getFirst("bodyType"));
-		vehicle.setFuelType(formParams.getFirst("fuelType"));
-		vehicle.setTransmission(formParams.getFirst("transmission"));
-		vehicle.setRegistracionDate(formParams.getFirst("registracionDate"));
-		vehicle.setColor(formParams.getFirst("color"));
-		vehicle.setPrice(Double.parseDouble(formParams.getFirst("price")));
-		vehicle.setVehicleLocation(formParams.getFirst("vehicleLocation"));
-
-		vehicleDAO.updateVehicle(vehicle.getId(), 
-				vehicle.getBrandName(), 
-				vehicle.getBodyType(), 
-				vehicle.getFuelType(), 
-				vehicle.getTransmission(),
-				vehicle.getRegistracionDate(), 
-				vehicle.getColor(), 
-				vehicle.getPrice(), 
-				vehicle.getVehicleLocation());
+//
+//		vehicle.setId(Long.parseLong(formParams.getFirst("id")));
+//		vehicle.setBrandName(formParams.getFirst("brandName"));
+//		vehicle.setBodyType(formParams.getFirst("bodyType"));
+//		vehicle.setFuelType(formParams.getFirst("fuelType"));
+//		vehicle.setTransmission(formParams.getFirst("transmission"));
+//		vehicle.setRegistracionDate(formParams.getFirst("registracionDate"));
+//		vehicle.setColor(formParams.getFirst("color"));
+//		vehicle.setPrice(Double.parseDouble(formParams.getFirst("price")));
+//		vehicle.setVehicleLocation(formParams.getFirst("vehicleLocation"));
+//
+//		vehicleDAO.updateVehicle(vehicle.getId(), 
+//				vehicle.getBrandName(), 
+//				vehicle.getBodyType(), 
+//				vehicle.getFuelType(), 
+//				vehicle.getTransmission(),
+//				vehicle.getRegistracionDate(), 
+//				vehicle.getColor(), 
+//				vehicle.getPrice(), 
+//				vehicle.getVehicleLocation());
 
 		return vehicle;
 	}
@@ -97,15 +97,15 @@ public class VehicleResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Vehicle addVehicle(Vehicle vehicle) {
 		
-		vehicleDAO.saveVehicle(vehicle.getId(), 
-				vehicle.getBrandName(), 
-				vehicle.getBodyType(), 
-				vehicle.getFuelType(), 
-				vehicle.getTransmission(),
-				vehicle.getRegistracionDate(), 
-				vehicle.getColor(), 
-				vehicle.getPrice(), 
-				vehicle.getVehicleLocation());
+//		vehicleDAO.saveVehicle(vehicle.getId(), 
+//				vehicle.getBrandName(), 
+//				vehicle.getBodyType(), 
+//				vehicle.getFuelType(), 
+//				vehicle.getTransmission(),
+//				vehicle.getRegistracionDate(), 
+//				vehicle.getColor(), 
+//				vehicle.getPrice(), 
+//				vehicle.getVehicleLocation());
 		
 		return vehicle;
 	}
@@ -116,29 +116,29 @@ public class VehicleResource {
 	@Path("add")
 	public Vehicle addVehicleParams(MultivaluedHashMap<String, String> formParams) {
 
-		System.out.println(formParams.getFirst("brandName"));
-		
+//		System.out.println(formParams.getFirst("brandName"));
+//		
 		Vehicle vehicle = new Vehicle();
-
-		vehicle.setId(Long.parseLong(formParams.getFirst("id")));
-		vehicle.setBrandName(formParams.getFirst("brandName"));
-		vehicle.setBodyType(formParams.getFirst("bodyType"));
-		vehicle.setFuelType(formParams.getFirst("fuelType"));
-		vehicle.setTransmission(formParams.getFirst("transmission"));
-		vehicle.setRegistracionDate(formParams.getFirst("registracionDate"));
-		vehicle.setColor(formParams.getFirst("color"));
-		vehicle.setPrice(Double.parseDouble(formParams.getFirst("price")));
-		vehicle.setVehicleLocation(formParams.getFirst("vehicleLocation"));
-
-		vehicleDAO.saveVehicle(vehicle.getId(), 
-				vehicle.getBrandName(), 
-				vehicle.getBodyType(), 
-				vehicle.getFuelType(), 
-				vehicle.getTransmission(),
-				vehicle.getRegistracionDate(), 
-				vehicle.getColor(), 
-				vehicle.getPrice(), 
-				vehicle.getVehicleLocation());
+//
+//		vehicle.setId(Long.parseLong(formParams.getFirst("id")));
+//		vehicle.setBrandName(formParams.getFirst("brandName"));
+//		vehicle.setBodyType(formParams.getFirst("bodyType"));
+//		vehicle.setFuelType(formParams.getFirst("fuelType"));
+//		vehicle.setTransmission(formParams.getFirst("transmission"));
+//		vehicle.setRegistracionDate(formParams.getFirst("registracionDate"));
+//		vehicle.setColor(formParams.getFirst("color"));
+//		vehicle.setPrice(Double.parseDouble(formParams.getFirst("price")));
+//		vehicle.setVehicleLocation(formParams.getFirst("vehicleLocation"));
+//
+//		vehicleDAO.saveVehicle(vehicle.getId(), 
+//				vehicle.getBrandName(), 
+//				vehicle.getBodyType(), 
+//				vehicle.getFuelType(), 
+//				vehicle.getTransmission(),
+//				vehicle.getRegistracionDate(), 
+//				vehicle.getColor(), 
+//				vehicle.getPrice(), 
+//				vehicle.getVehicleLocation());
 
 		return vehicle;
 	}

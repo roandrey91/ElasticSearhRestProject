@@ -1,26 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="vehicle-rules"
+		transaction-type="JTA">
+		<provider>org.apache.openjpa.persistence.PersistenceProviderImpl</provider>
+		<jta-data-source>vehicle</jta-data-source>
+		<class>com.fortech.elasticSearchREST.model.Vehicle</class>
+		</persistence-unit>
+</persistence>
+
+
+
+
+
+
+
+
+
+
+<!-- <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0"
     xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="elasticSearchREST" transaction-type="RESOURCE_LOCAL">
-        <!-- Persistence provider -->
+        Persistence provider
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-        <!-- Entity classes -->
+        Entity classes
         <class>com.fortech.elasticSearchREST.model.Vehicle</class>
         <properties>
-            <!-- The JDBC driver of your database -->
+            The JDBC driver of your database
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
-            <!-- The JDBC URL to the database instance -->
+            The JDBC URL to the database instance
             <property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.50.23:3306/vehicles" />
-            <!-- The database username -->
+            The database username
             <property name="javax.persistence.jdbc.user" value="me" />
-            <!-- The database password -->
+            The database password
             <property name="javax.persistence.jdbc.password" value="root" />
         </properties>
     </persistence-unit>
 </persistence>
 
-
+ -->
 
 
 

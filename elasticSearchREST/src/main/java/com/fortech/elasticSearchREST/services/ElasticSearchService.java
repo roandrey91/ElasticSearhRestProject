@@ -1,6 +1,5 @@
 package com.fortech.elasticSearchREST.services;
 
-import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Logger;
 
-import org.apache.commons.lang.StringUtils;
 import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexResponse;
@@ -21,8 +19,6 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.xcontent.XContentBuilder;
-import org.elasticsearch.common.xcontent.XContentFactory;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -397,29 +393,6 @@ public class ElasticSearchService {
 	}
 
 	
-	public XContentBuilder createXContentBuilder(final Map<String, Object> fieldValues) throws IOException {
-
-		// create a new JSON object builder and start them
-		final XContentBuilder builder = XContentFactory.jsonBuilder().startObject();
-
-		for (final Map.Entry<String, Object> entry : fieldValues.entrySet()) {
-
-			final String[] fields = StringUtils.split(entry.getKey(), '.');
-			for (int i = 0; i < fields.length - 1; i++) {
-				builder.startObject(fields[i]);
-			}
-			builder.field(fields[fields.length - 1], entry.getValue());
-			for (int i = 0; i < fields.length - 1; i++) {
-				builder.endObject();
-			}
-		}
-
-		// close the json root object
-		builder.endObject();
-		builder.prettyPrint();
-
-		return builder;
-	}
 
 
 	public static Map<String, Object> putJsonDocument(Long id, String brandName, String bodyType, String fuelType,
