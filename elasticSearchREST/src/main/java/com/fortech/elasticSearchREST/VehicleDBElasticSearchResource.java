@@ -1,5 +1,6 @@
 package com.fortech.elasticSearchREST;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -26,7 +27,8 @@ public class VehicleDBElasticSearchResource {
 
 	private	DbESService dbs = new DbESService();
 
-	private VehicleDAO vehicleDAOImpl = new VehicleDAOImpl();
+	@Inject
+	private VehicleDAO vehicleDAO;
 	
 	/**
 	 * Method handling HTTP GET requests. 
@@ -43,7 +45,7 @@ public class VehicleDBElasticSearchResource {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
 
-		Vehicle vehicle = vehicleDAOImpl.findVehicleById(id);
+		Vehicle vehicle = vehicleDAO.findVehicleById(id);
 		if (vehicle == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}

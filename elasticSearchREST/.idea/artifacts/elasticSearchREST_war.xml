@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="elasticSearchREST:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="elasticSearchREST.war">
+      <element id="artifact" artifact-name="elasticSearchREST:war exploded" />
+    </root>
+  </artifact>
+</component>

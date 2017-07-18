@@ -101,7 +101,6 @@ public class ElasticSearchService {
 		return esClient;
 	}
 
-
 	/*
 	 * ************************************************************************************************
 	 * ******************************** CRUD API methods *********************************************
@@ -361,8 +360,7 @@ public class ElasticSearchService {
 		}
 		return vehicles;
 	}
-	
-	
+
 	/**
 	 * Search document with filter.
 	 * 
@@ -391,9 +389,6 @@ public class ElasticSearchService {
 		vehicleES = gson.fromJson(stringHit, VehicleES.class);
 		return vehicleES;
 	}
-
-	
-
 
 	public static Map<String, Object> putJsonDocument(Long id, String brandName, String bodyType, String fuelType,
 			String transmission, String registracionDate, String color, Double price, String vehicleLocation,
