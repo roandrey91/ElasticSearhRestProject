@@ -1,60 +1,51 @@
 package com.fortech.elasticSearchREST.persistance;
 
+import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.Stateless;
+
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import com.fortech.elasticSearchREST.model.Vehicle;
 
 /**
- * This class provides implementation of methods 
+ * This class provides implementation of methods
  * CRUD operations for DB
- * 
- * @author andreig.muresan
  *
+ * @author andreig.muresan
  */
+@Transactional
+public class VehicleDAOImpl implements VehicleDAO, Serializable {
 
-public class VehicleDAOImpl implements VehicleDAO  {
+    @PersistenceContext(unitName = "vehicle-rules")
+    private EntityManager entityManager;
 
-	@PersistenceContext(unitName = "vehicle-rules")
-	private EntityManager entityManager;
+    @Override
+    public void saveVehicle(Vehicle vehicle) {
+        entityManager.persist(vehicle);
+    }
 
-	@Override
-	public void saveVehicle(Vehicle vehicle) {
-		if (vehicle.getId() == 0) {
-			entityManager.persist(vehicle);
-		}else {
-			entityManager.merge(vehicle);
-		}
-	}
+    @Override
+    public void updateVehicle(Vehicle vehicle) {
+        entityManager.merge(vehicle);
+    }
 
-	@Override
-	public void updateVehicle(Vehicle vehicle) {
+    @Override
+    public void deleteVehicle(long id) {
+        Vehicle findVehicle = entityManager.find(Vehicle.class, id);
+        entityManager.remove(findVehicle);
+    }
 
-		entityManager.merge(vehicle);
-	}
+    @Override
+    public Vehicle findVehicleById(long id) {
+        return entityManager.find(Vehicle.class, id);
+    }
 
-	@Override
-	public void deleteVehicle(long id){
-		 Vehicle findVehicle = entityManager.find(Vehicle.class, id);
-		entityManager.remove(findVehicle);
-	}
-
-	@Override
-	public Vehicle findVehicleById(long id){
-		return entityManager.find(Vehicle.class, id);
-	}
-
-	@Override
-	public List<Vehicle> readAll() {
-		List<Vehicle> vehicles = entityManager.createQuery("SELECT s FROM Vehicle s",
-				Vehicle.class).getResultList();
-		return vehicles;
-	}
+    @Override
+    public List<Vehicle> readAll() {
+        return entityManager.createQuery("SELECT s FROM Vehicle s", Vehicle.class).getResultList();
+    }
 
 }

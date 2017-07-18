@@ -12,7 +12,6 @@ import javax.ws.rs.core.Response.Status;
 
 import com.fortech.elasticSearchREST.model.Vehicle;
 import com.fortech.elasticSearchREST.persistance.VehicleDAO;
-import com.fortech.elasticSearchREST.persistance.VehicleDAOImpl;
 import com.fortech.elasticSearchREST.services.DbESService;
 
 /**
@@ -25,7 +24,8 @@ import com.fortech.elasticSearchREST.services.DbESService;
 @Path("dbes")
 public class VehicleDBElasticSearchResource {
 
-	private	DbESService dbs = new DbESService();
+	@Inject
+	private	DbESService dbs;
 
 	@Inject
 	private VehicleDAO vehicleDAO;
@@ -63,7 +63,7 @@ public class VehicleDBElasticSearchResource {
 	 * @param id
 	 * 		Id number.
 	 * @return Response message
-	 * @throws InterruptedException
+	 * @throws InterruptedException .
 	 */
 	@POST
 	@Consumes("application/json")

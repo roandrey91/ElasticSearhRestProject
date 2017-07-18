@@ -3,6 +3,7 @@ package com.fortech.elasticSearchREST;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -29,7 +30,9 @@ import com.google.gson.Gson;
 public class VehicleESResource {
 
 	private Gson gson = new Gson();
-	private ElasticSearchService elasticSearchService = new ElasticSearchService();
+
+	@Inject
+	private ElasticSearchService elasticSearchService;
 
 	@DELETE
 	@Consumes("application/json")
@@ -74,17 +77,6 @@ public class VehicleESResource {
 	{
 		elasticSearchService.createIndex(index, type, id, gson.toJson(vehicle, VehicleES.class));
 		return Response.ok().build();
-	}
-
-	@GET
-	@Produces("application/json")
-	@Path("findIfExist/{index}")
-	public Response ifExist(@PathParam("index") String index) {
-
-		elasticSearchService.isIndexExist(index);
-
-		System.out.println(elasticSearchService.isIndexExist(index));
-		return Response.ok().build();		
 	}
 
 	@GET

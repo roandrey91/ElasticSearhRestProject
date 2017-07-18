@@ -1,10 +1,12 @@
 package com.fortech.elasticSearchREST.services;
 
-import com.fortech.elasticSearchREST.model.Vehicle;
+import com.fortech.elasticSearchREST.com.fortech.elasticSearchREST.dbes.VehicleToVehicleES;
 import com.fortech.elasticSearchREST.model.VehicleES;
 import com.fortech.elasticSearchREST.persistance.VehicleDAO;
-import com.fortech.elasticSearchREST.persistance.VehicleDAOImpl;
 import com.google.gson.Gson;
+
+import javax.inject.Inject;
+
 /**
  * This class provide transfer of data between MySQL to ElasticSearch.
  * 
@@ -14,9 +16,14 @@ import com.google.gson.Gson;
 
 public class DbESService {
 
-	private ElasticSearchService elasticSearchService = new ElasticSearchService();
-	private VehicleDAO vehicleDAOImpl = new VehicleDAOImpl();
+	@Inject
+	private ElasticSearchService elasticSearchService;
 
+	@Inject
+	private VehicleDAO vehicleDAOImpl;
+
+	@SuppressWarnings("unused")
+	private VehicleToVehicleES vehicleToVehicleES;
 	private 	Gson gson = new Gson();
 		
 	/**
@@ -30,10 +37,10 @@ public class DbESService {
 	 * 		Id number.
 	 * @param tags
 	 * 		Array of tags.
-	 * @throws InterruptedException
+	 * @throws InterruptedException .
 	 */
 	public  void transferFromDbToES (String index, String type, String id, String[] tags) throws InterruptedException {
-		elasticSearchService.createIndex(index, type, id, gson.toJson(Vehicle.populate
+		elasticSearchService.createIndex(index, type, id, gson.toJson(vehicleToVehicleES.populate
 				(vehicleDAOImpl.findVehicleById(Long.parseLong(id)), tags), VehicleES.class));
 	}
 

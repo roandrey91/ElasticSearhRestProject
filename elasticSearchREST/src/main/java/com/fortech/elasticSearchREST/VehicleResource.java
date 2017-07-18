@@ -10,15 +10,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.MultivaluedHashMap;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.fortech.elasticSearchREST.model.Vehicle;
 import com.fortech.elasticSearchREST.persistance.VehicleDAO;
-import com.fortech.elasticSearchREST.persistance.VehicleDAOImpl;
-import com.google.gson.Gson;
 
 /**
  *  Resource (exposed at "vehicle" path)
@@ -34,8 +30,6 @@ public class VehicleResource {
 	@Inject
 	private VehicleDAO vehicleDAO;
 
-	private Gson gson;
-
 	@DELETE
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -47,30 +41,11 @@ public class VehicleResource {
 
 	@POST
 	@Path("update")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Vehicle updateVehicle(Vehicle vehicle) {
-
-//		vehicleDAO.updateVehicle(vehicle.getId(),
-//				vehicle.getBrandName(),
-//				vehicle.getBodyType(),
-//				vehicle.getFuelType(),
-//				vehicle.getTransmission(),
-//				vehicle.getRegistracionDate(),
-//				vehicle.getColor(),
-//				vehicle.getPrice(),
-//				vehicle.getVehicleLocation());
-
-		return vehicle;
-	}
-
-	@POST
-	@Path("update")
 	@Consumes("application/json")
 	@Produces("application/json")
-	public Vehicle updateVehicleParams(Vehicle vehicle) {
+	public Response updateVehicleParams(Vehicle vehicle) {
 		vehicleDAO.updateVehicle(vehicle);
-		return vehicle;
+		return Response.ok().entity(vehicle).build();
 	}
 	
 	@POST
@@ -78,9 +53,8 @@ public class VehicleResource {
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response addVehicle(Vehicle vehicle) {
-
 		vehicleDAO.saveVehicle(vehicle);
-		return Response.ok().build();
+		return Response.ok().entity(vehicle).build();
 	}
 
 
