@@ -19,44 +19,63 @@ import java.util.List;
 
 public class VehicleTransferService {
 
-    @Inject
-    private ElasticSearchService elasticSearchService;
+	@Inject
+	private ElasticSearchService elasticSearchService;
 
-    @Inject
-    private VehicleDAO vehicleDAOImpl;
+	@Inject
+	private VehicleDAO vehicleDAOImpl;
 
-    private Gson gson = new Gson();
+	private Gson gson = new Gson();
 
-    /**
-     * Transfer data between MySQL and ElasticSearch.
-     *
-     * @param index Name of index.
-     * @param type  Name of type.
-     * @param id    Id number.
-     * @param tags  Array of tags.
-     * @throws InterruptedException .
-     */
-    public void transferFromDbToES(String index, String type, String id, String[] tags) throws InterruptedException {
-        elasticSearchService.createIndex(index, type, id, gson.toJson(VehicleToVehicleES.createNewVehicleESFromVehicle
-                (vehicleDAOImpl.findVehicleById(Long.parseLong(id)), tags), VehicleES.class));
-    }
+	/**
+	 * Transfer data between MySQL and ElasticSearch.
+	 *
+	 * @param index Name of index.
+	 * @param type  Name of type.
+	 * @param id    Id number.
+	 * @param tags  Array of tags.
+	 * @throws InterruptedException .
+	 */
+	public void transferFromDbToES(String index, String type, String id, String[] tags) throws InterruptedException {
+		elasticSearchService.createIndex(index, type, id, gson.toJson(VehicleToVehicleES.createNewVehicleESFromVehicle
+				(vehicleDAOImpl.findVehicleById(Long.parseLong(id)), tags), VehicleES.class));
+	}
 
-    public void transferAllDataFromDbToES(String index, String type, String[] tags) {
 
-        List<Vehicle> vehicleDB = vehicleDAOImpl.readAll();
-        List<VehicleES> vehicleESList = VehicleToVehicleES.populateList(vehicleDB, tags);
+	/**
+	 * This method transfer all data from MySQL to ElasticSearch
+	 * 
+	 * @param index
+	 * 		Name of index.
+	 * @param type
+	 * 		Name of type.
+	 * @param tags
+	 * 		Array of Strings - here are tags for short time...
+	 */
+	public void transferAllDataFromDbToES(String index, String type, String[] tags) {
 
-        elasticSearchService.bulkAddIndex(index, type, vehicleESList);
-    }
+		List<Vehicle> vehicleDB = vehicleDAOImpl.readAll();
+		List<VehicleES> vehicleESList = VehicleToVehicleES.populateList(vehicleDB, tags);
 
-    public void tranferAllDataFromDbToEs2(String indexName, final String typeName, String[] tags ){
-    	
-    	List<Vehicle> vehicleDB = vehicleDAOImpl.readAll();
-        List<VehicleES> vehicleESList = VehicleToVehicleES.populateList(vehicleDB, tags);
-        
-        elasticSearchService.bulkAddToIndex(indexName, typeName, vehicleESList);
-    }
-    
-    
-    
+		elasticSearchService.bulkAddIndex(index, type, vehicleESList);
+	}
+
+	
+	/**
+	 * This does't work ... bulkProcess is null 
+	 * 
+	 * @param indexName
+	 * @param typeName
+	 * @param tags
+	 */
+	public void tranferAllDataFromDbToEs2(String indexName, final String typeName, String[] tags ){
+
+		List<Vehicle> vehicleDB = vehicleDAOImpl.readAll();
+		List<VehicleES> vehicleESList = VehicleToVehicleES.populateList(vehicleDB, tags);
+
+		elasticSearchService.bulkAddToIndex(indexName, typeName, vehicleESList);
+	}
+
+
+
 }

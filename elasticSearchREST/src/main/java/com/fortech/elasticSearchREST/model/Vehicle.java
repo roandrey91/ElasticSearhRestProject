@@ -1,11 +1,12 @@
 package com.fortech.elasticSearchREST.model;
 
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Objects;
 
 /**
  * @author andreig.muresan
@@ -39,7 +40,6 @@ public class Vehicle {
 
     }
 
-    @SuppressWarnings("unused")
     public Vehicle(Long id, String brandName, String bodyType, String fuelType, String transmission, String registracionDate, String color, Double price, String vehicleLocation) {
         this.id = id;
         this.brandName = brandName;

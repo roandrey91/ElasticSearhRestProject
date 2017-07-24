@@ -1,16 +1,14 @@
 package com.fortech.elasticSearchREST.services;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import org.elasticsearch.action.bulk.BackoffPolicy;
+import javax.inject.Inject;
+
 import org.elasticsearch.action.bulk.BulkProcessor;
-import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetResponse;
@@ -20,12 +18,6 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.Client;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.common.unit.ByteSizeUnit;
-import org.elasticsearch.common.unit.ByteSizeValue;
-import org.elasticsearch.common.unit.TimeValue;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -42,91 +34,14 @@ import com.google.gson.Gson;
 
 public class ElasticSearchService {
 
-	/*
-	 * ************************************************************************************************
-	 * ******************************** Configuration parameters **************************************
-	 * ************************************************************************************************
-	 */
 
+	@Inject
 	private Client esClient;
 
+	@Inject
 	private BulkProcessor  esBulkProcessor;
-	/**
-	 * Host
-	 */
-	private static final String ES_HOST = "localhost";
-
-	/**
-	 * Port
-	 */
-	private static final int ES_PORT = 9300;
-
-	/**
-	 * Cluster name
-	 */
-	private static final String ES_CLUSTER_NAME = "elasticsearch";
-
-	private static final int    ES_BULK_PROCESSOR_ACTIONS = 10000;
-
-	private static final int    ES_BULK_PROCESSOR_CONCURRENT_REQUESTS = 1;
-
-	private static final int    ES_BULK_PROCESSOR_FLUSH_INTERVAL = 5;
 
 	private Gson gson = new Gson();
-
-	/*
-	 * ************************************************************************************************
-	 * ******************************** Initialization/Connection to ES methods ***********************
-	 * ************************************************************************************************
-	 */
-
-	/**
-	 * Deliver connection to ElasticSearch
-	 *
-	 * @return Current {@link Client} object
-	 */
-	private Client getESClient() {
-
-		final Settings esSettings = Settings.settingsBuilder().put("cluster.name", ES_CLUSTER_NAME).build();
-		try {
-			esClient =  TransportClient.builder().settings(esSettings).build()
-					.addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName(ES_HOST), ES_PORT));
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		return esClient;
-	}
-
-	private  BulkProcessor getBulk(){
-		esBulkProcessor = initBulkProcessor();
-		return esBulkProcessor;
-	}
-
-	private BulkProcessor initBulkProcessor() {
-		return BulkProcessor.builder(esClient, new BulkProcessor.Listener() {
-
-			@Override
-			public void beforeBulk(final long executionId, final BulkRequest request) {
-
-			}
-
-			@Override
-			public void afterBulk(final long executionId, final BulkRequest request, final BulkResponse response) {
-
-			}
-
-			@Override
-			public void afterBulk(final long executionId, final BulkRequest request, final Throwable failure) {
-
-			}
-
-		}).setBulkActions(ES_BULK_PROCESSOR_ACTIONS)
-				.setBulkSize(new ByteSizeValue(1, ByteSizeUnit.GB))
-				.setConcurrentRequests(ES_BULK_PROCESSOR_CONCURRENT_REQUESTS)
-				.setFlushInterval(TimeValue.timeValueSeconds(ES_BULK_PROCESSOR_FLUSH_INTERVAL))
-				.setBackoffPolicy(BackoffPolicy.exponentialBackoff(TimeValue.timeValueMillis(100),3))
-				.build();
-	}
 
 	/*
 	 * ************************************************************************************************
@@ -136,7 +51,7 @@ public class ElasticSearchService {
 
 	public void bulkAddToIndex(final String indexName, final String typeName, List<VehicleES> vehicleES) {
 		String jsonData = gson.toJson(vehicleES);
-		vehicleES.forEach(vehicleES1 -> getBulk().add(new IndexRequest(indexName, typeName, vehicleES1.getId().toString()).source(jsonData)) );
+		vehicleES.forEach(vehicleES1 -> esBulkProcessor.add(new IndexRequest(indexName, typeName, vehicleES1.getId().toString()).source(jsonData)) );
 	}
 
 	/**
@@ -151,8 +66,8 @@ public class ElasticSearchService {
 	 */
 	@SuppressWarnings("unused")
 	public void bulkAddIndex(String index, String typeName, List<VehicleES> vehicleES){
-		BulkRequestBuilder bulkRequestBuilder = getESClient().prepareBulk();
-		vehicleES.forEach(vehicleES1 -> bulkRequestBuilder.add(getESClient().prepareIndex(index, typeName).setId(vehicleES1.getId().toString())
+		BulkRequestBuilder bulkRequestBuilder = esClient.prepareBulk();
+		vehicleES.forEach(vehicleES1 -> bulkRequestBuilder.add(esClient.prepareIndex(index, typeName).setId(vehicleES1.getId().toString())
 				.setSource(gson.toJson(vehicleES1))));
 		BulkResponse responses = bulkRequestBuilder.get();
 	}
@@ -174,7 +89,7 @@ public class ElasticSearchService {
 	 */
 	@SuppressWarnings("unused")
 	public void createIndex(String index, String type, String id, String data) throws InterruptedException {
-		IndexResponse response = getESClient().prepareIndex(index, type, id).setSource(data).get();
+		IndexResponse response = esClient.prepareIndex(index, type, id).setSource(data).get();
 		Thread.sleep(2000);
 	}
 
@@ -190,7 +105,7 @@ public class ElasticSearchService {
 	 */
 	@SuppressWarnings("unused")
 	public void updateIndex(String index, String type, String id, String jsonData) throws InterruptedException, ExecutionException {
-		UpdateResponse response = getESClient().prepareUpdate(index, type, id).setDoc(jsonData).execute().get();
+		UpdateResponse response = esClient.prepareUpdate(index, type, id).setDoc(jsonData).execute().get();
 	}
 
 	/**
@@ -210,7 +125,7 @@ public class ElasticSearchService {
 		Map<String, Object> updateObject = new HashMap<>();
 		updateObject.put(field, newValue);
 
-		UpdateResponse updateRequestBuilder = getESClient().prepareUpdate(index, type, id)
+		UpdateResponse updateRequestBuilder = esClient.prepareUpdate(index, type, id)
 				.setDoc(updateObject).execute().get();
 	}
 
@@ -222,7 +137,7 @@ public class ElasticSearchService {
 	 * @param id    Unique ID for document
 	 */
 	public void removeDocument(String index, String type, String id) {
-		getESClient().prepareDelete(index, type, id).execute().actionGet();
+		esClient.prepareDelete(index, type, id).execute().actionGet();
 	}
 
 	/**
@@ -234,7 +149,7 @@ public class ElasticSearchService {
 	 * @return {@link VehicleES} Object
 	 */
 	public VehicleES getDocument(String index, String type, String id) {
-		GetResponse getResponse = getESClient().prepareGet(index, type, id).execute().actionGet();
+		GetResponse getResponse = esClient.prepareGet(index, type, id).execute().actionGet();
 		String source = getResponse.getSourceAsString();
 		return gson.fromJson(source, VehicleES.class);
 	}
@@ -256,7 +171,7 @@ public class ElasticSearchService {
 
 		while (response == null || response.getHits().hits().length != 0) {
 			esData.clear();
-			response = getESClient().prepareSearch(indexName).setTypes(typeName).setQuery(QueryBuilders.matchAllQuery())
+			response = esClient.prepareSearch(indexName).setTypes(typeName).setQuery(QueryBuilders.matchAllQuery())
 					.setSize(scrollSize).setFrom(i * scrollSize).execute().actionGet();
 			for (SearchHit hit : response.getHits()) {
 
@@ -284,7 +199,7 @@ public class ElasticSearchService {
 	public VehicleES findDocumentByFilter(String index, String type, String field, String value) {
 		String stringHit = "";
 		QueryBuilder queryBuilder = new MatchQueryBuilder(field, value);
-		SearchResponse response = getESClient().prepareSearch(index).setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH)
+		SearchResponse response = esClient.prepareSearch(index).setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH)
 				.setQuery(queryBuilder).setFrom(0).setSize(60).setExplain(true).execute().actionGet();
 		for (SearchHit hit : response.getHits()) {
 			stringHit = hit.getSourceAsString();

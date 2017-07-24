@@ -31,7 +31,6 @@ public class VehicleES {
 		
 	}
 
-	@SuppressWarnings("unused")
 	public VehicleES(Long id, String brandName, String bodyType, String fuelType, String transmission,
 			String registracionDate, String color, Double price, String vehicleLocation, String[] tags) {
 		this.id = id;
@@ -54,7 +53,6 @@ public class VehicleES {
 		this.id = id;
 	}
 
-	@SuppressWarnings("unused")
 	public String getBrandName() {
 		return brandName;
 	}
@@ -63,7 +61,6 @@ public class VehicleES {
 		this.brandName = brandName;
 	}
 
-	@SuppressWarnings("unused")
 	public String getBodyType() {
 		return bodyType;
 	}
@@ -72,7 +69,6 @@ public class VehicleES {
 		this.bodyType = bodyType;
 	}
 
-	@SuppressWarnings("unused")
 	public String getFuelType() {
 		return fuelType;
 	}
@@ -81,7 +77,6 @@ public class VehicleES {
 		this.fuelType = fuelType;
 	}
 
-	@SuppressWarnings("unused")
 	public String getTransmission() {
 		return transmission;
 	}
@@ -90,7 +85,6 @@ public class VehicleES {
 		this.transmission = transmission;
 	}
 
-	@SuppressWarnings("unused")
 	public String getRegistracionDate() {
 		return registracionDate;
 	}
@@ -99,7 +93,6 @@ public class VehicleES {
 		this.registracionDate = registracionDate;
 	}
 
-	@SuppressWarnings("unused")
 	public String getColor() {
 		return color;
 	}
@@ -108,7 +101,6 @@ public class VehicleES {
 		this.color = color;
 	}
 
-	@SuppressWarnings("unused")
 	public Double getPrice() {
 		return price;
 	}
@@ -117,7 +109,6 @@ public class VehicleES {
 		this.price = price;
 	}
 
-	@SuppressWarnings("unused")
 	public String getVehicleLocation() {
 		return vehicleLocation;
 	}
@@ -126,7 +117,6 @@ public class VehicleES {
 		this.vehicleLocation = vehicleLocation;
 	}
 
-	@SuppressWarnings("unused")
 	public String[] getTags() {
 		return tags;
 	}

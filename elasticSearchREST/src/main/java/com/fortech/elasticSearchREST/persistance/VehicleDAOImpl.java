@@ -1,8 +1,6 @@
 package com.fortech.elasticSearchREST.persistance;
 
-import java.io.Serializable;
 import java.util.List;
-
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,7 +15,7 @@ import com.fortech.elasticSearchREST.model.Vehicle;
  * @author andreig.muresan
  */
 @Transactional
-public class VehicleDAOImpl implements VehicleDAO, Serializable {
+public class VehicleDAOImpl implements VehicleDAO {
 
     @PersistenceContext(unitName = "vehicle-rules")
     private EntityManager entityManager;
