@@ -19,6 +19,12 @@ import org.elasticsearch.common.unit.ByteSizeUnit;
 import org.elasticsearch.common.unit.ByteSizeValue;
 import org.elasticsearch.common.unit.TimeValue;
 
+/**
+ * This class provide connection to ElasticSearch. 
+ * 
+ * @author andreig.muresan
+ *
+ */
 public class ConnectionService {
 
 	private static final Logger LOGGER = Logger.getLogger(ConnectionService.class.getName());
@@ -44,11 +50,30 @@ public class ConnectionService {
 	 */
 	private static final String ES_CLUSTER_NAME = "elasticsearch";
 
+	/**
+     * Sets when to flush a new bulk request based on the number of actions currently added.<br>
+     * Defaults to 1000. Can be set to -1 to disable it.
+     */
 	private static final int    ES_BULK_PROCESSOR_ACTIONS = 10000;
 
+	 /**
+     * Sets the number of concurrent requests allowed to be executed.<br>
+     * A value of 0 means that only a single request will be allowed to be executed.<br>
+     * A value of 1 means 1 concurrent request is allowed to be executed while accumulating new bulk requests.<br>
+     */
 	private static final int    ES_BULK_PROCESSOR_CONCURRENT_REQUESTS = 1;
 
+	 /**
+     * Flush interval in seconds for the bulk processor
+     */
 	private static final int    ES_BULK_PROCESSOR_FLUSH_INTERVAL = 5;
+	
+	/*
+	 * ************************************************************************************************
+	 * ******************************** Init methods **************************************************
+	 * ************************************************************************************************
+	 */
+
 
 	/**
 	 * Deliver connection to ElasticSearch

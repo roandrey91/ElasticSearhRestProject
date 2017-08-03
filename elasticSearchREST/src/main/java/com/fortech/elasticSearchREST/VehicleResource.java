@@ -36,6 +36,7 @@ public class VehicleResource {
 	@Path("delete/{vehicleId}")
 	public Response deleteVehicle(@PathParam("vehicleId") long vehicleId) {
 		vehicleDAO.deleteVehicle(vehicleId);
+	
 		return Response.ok().build();
 	}
 

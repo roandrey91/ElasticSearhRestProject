@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet library="css" name="bootstrap.css"></h:outputStylesheet>
+
+	<title>Adding Vehicle</title>
+</h:head>
+
+<h:body>
+
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">ElasticSearch FProject</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a
+					href="http://localhost:8081/primefaces/faces/basic.xhtml">ES
+						Vehicles</a></li>
+				<li><a
+					href="http://localhost:8081/primefaces/faces/vehicleDB.xhtml">DB
+						Vehicles</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a
+					href="http://localhost:8081/primefaces/faces/process.xhtml"><span
+						class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+	
+	
+	<h:form>
+        <h3>Adding Vehicle</h3>
+	<h:panelGrid columns="3">
+		<h:outputLabel for="id">Vehicle ID:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.id}" id="id" ></h:inputText>
+		<br />
+		<br />
+
+		<h:outputLabel for="brandName">Vehicle brandName:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.brandName}" id="brandName"></h:inputText>
+		<br />
+		<br />
+
+		<h:outputLabel for="bodyType">bodyType:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.bodyType}" id="bodyType"></h:inputText>
+		<br />
+		<br />
+
+		<h:outputLabel for="fuelType">fuelType:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.fuelType}" id="fuelType"></h:inputText>
+		<br />
+		<br />
+
+		<h:outputLabel for="transmission">transmission:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.transmission}" id="transmission"></h:inputText>
+		<br />
+		<br />
+
+		<h:outputLabel for="registracionDate">registracionDate:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.registracionDate}" id="registracionDate"></h:inputText>
+		<br />
+		<br />
+
+		<h:outputLabel for="color">Color:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.color}"  id="color"></h:inputText>
+		<br />
+		<br />
+
+		<h:outputLabel for="price">price:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.price}" id="price"></h:inputText>
+		<br />
+		<br />
+
+		<h:outputLabel for="vehicleLocation">vehicle Location:</h:outputLabel>
+		<h:inputText value="#{vehicleDb.vehicle.vehicleLocation}" id="vehicleLocation"></h:inputText>
+		<br />
+		<br />
+		<h:commandButton action="#{vehicleDb.save}" value="Save" >
+			
+		</h:commandButton>
+
+	</h:panelGrid>
+	</h:form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</h:body>
+</html>
