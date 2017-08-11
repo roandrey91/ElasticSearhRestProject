@@ -11,7 +11,9 @@
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
-	<h:outputStylesheet library="css" name="bootstrap.css"></h:outputStylesheet>
+	<h:outputStylesheet name="css/bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet name="css/style.css"></h:outputStylesheet>
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 
 <title>List of Cars form ElasticSearch</title>
 </h:head>
@@ -32,7 +34,7 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">Home</a></li>
 				<li><a href="#">About</a></li>
-				<li><a href="http://localhost:8081/primefaces/faces/basic.xhtml">ES Vehicles</a></li>
+				<li><a href="http://localhost:8081/primefaces/faces/vehicleES.xhtml">ES Vehicles</a></li>
 				<li><a href="http://localhost:8081/primefaces/faces/vehicleDB.xhtml">DB Vehicles</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -94,5 +96,9 @@
 
 		</p:dataTable>
 	</div>
+	
+	<div class="ui-g-12">
+       Made by Muresan Andrei, Junior Software Developer
+    </div>
 </h:body>
 </html>

@@ -31,7 +31,6 @@ public class VehicleResource {
 	private VehicleDAO vehicleDAO;
 
 	@DELETE
-	@Consumes("application/json")
 	@Produces("application/json")
 	@Path("delete/{vehicleId}")
 	public Response deleteVehicle(@PathParam("vehicleId") long vehicleId) {
