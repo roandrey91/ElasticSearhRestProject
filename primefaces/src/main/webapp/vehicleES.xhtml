@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet name="css/bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet name="css/style.css"></h:outputStylesheet>
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+
+<title>List of Cars form ElasticSearch</title>
+</h:head>
+
+<h:body>
+
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">ElasticSearch FProject</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a href="http://localhost:8081/primefaces/faces/vehicleES.xhtml">ES Vehicles</a></li>
+				<li><a href="http://localhost:8081/primefaces/faces/vehicleDB.xhtml">DB Vehicles</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="http://localhost:8081/primefaces/faces/process.xhtml"><span class="glyphicon glyphicon-log-in"></span>
+						Login</a></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+
+	<div class="table-responsive">
+		<p:dataTable tableStyleCalss="table table-striped" var="car"
+			value="#{dtVehicleESView.cars}">
+
+			<f:facet name="header">
+        List of Cars from ElasticSearch
+    </f:facet>
+
+			<p:column headerText="Id">
+				<h:outputText value="#{car.id}" />
+			</p:column>
+
+			<p:column headerText="Year">
+				<h:outputText value="#{car.brandName}" />
+			</p:column>
+
+			<p:column headerText="Brand">
+				<h:outputText value="#{car.bodyType}" />
+			</p:column>
+
+			<p:column headerText="FuelType">
+				<h:outputText value="#{car.fuelType}" />
+			</p:column>
+
+			<p:column headerText="Transmission">
+				<h:outputText value="#{car.transmission}" />
+			</p:column>
+
+			<p:column headerText="RegistracionDate">
+				<h:outputText value="#{car.registracionDate}" />
+			</p:column>
+
+			<p:column headerText="Color">
+				<h:outputText value="#{car.color}" />
+			</p:column>
+
+			<p:column headerText="Price">
+				<h:outputText value="#{car.price}" />
+			</p:column>
+
+			<p:column headerText="VehicleLocation">
+				<h:outputText value="#{car.vehicleLocation}" />
+			</p:column>
+
+			<p:column headerText="Tags">
+				<h:outputText value="#{car.tags}" />
+			</p:column>
+		
+
+		</p:dataTable>
+	</div>
+	
+	<div class="ui-g-12">
+       Made by Muresan Andrei, Junior Software Developer
+    </div>
+</h:body>
+</html>

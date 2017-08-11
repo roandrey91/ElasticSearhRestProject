@@ -1,17 +1,17 @@
 package com.fortech.beans;
 import java.io.Serializable;
 import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.ViewScoped;
-
+import javax.faces.bean.RequestScoped;
 
 import com.fortech.data.VehicleES;
 import com.fortech.services.CarService;
  
 @ManagedBean(name="dtVehicleESView")
-@ViewScoped
+@RequestScoped
 public class VehicleESView implements Serializable {
    
 	private static final long serialVersionUID = 1L;

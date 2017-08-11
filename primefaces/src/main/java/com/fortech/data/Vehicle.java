@@ -78,6 +78,8 @@ public class Vehicle implements Serializable{
 	}
 
 	public void setRegistracionDate(String registracionDate) {
+//		DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy hh:mm:ss");
+//		String strDate = dateFormat.format(registracionDate);
 		this.registracionDate = registracionDate;
 	}
 

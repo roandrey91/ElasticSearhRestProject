@@ -14,16 +14,22 @@ import com.sun.jersey.api.client.WebResource;
 public class VehicleClient {
 
 	private Gson gson = new Gson();
+	
+	private String URL_GET_VEHICLES_FROM_ES = "http://localhost:8080/elasticSearchREST/elasticSearch/vehicles/vehicle";
+	private String URL_GET_VEHICLES_FROM_DB = "http://localhost:8080/elasticSearchREST/vehicle/getAll";
+	private String URL_SAVE_VEHICLE_TO_DB = "http://localhost:8080/elasticSearchREST/vehicle/add";
+	private String URL_DELETE_VEHICLE_FROM_DB = "http://localhost:8080/elasticSearchREST/vehicle/delete";
+	private String URL_UPDATE_VEHICLE_TO_DB = "http://localhost:8080/elasticSearchREST/vehicle/update";
+	private String URL_TRANSFER_VEHICLE_FROM_DB_TO_ES = "http://localhost:8080/elasticSearchREST/dbes/transfer";
+	private String URL_TRANSFER_ALL_VEHICLES_FROM_DB_TO_ES = "http://localhost:8080/elasticSearchREST/dbes/transferall";
 
 	public List<VehicleES> getVehicleFromES(){
 
 		List<VehicleES> vehicleList = new ArrayList<VehicleES>();
 		
 		Client client = Client.create();
-
-		String url = "http://localhost:8080/elasticSearchREST/elasticSearch/vehicles/vehicle";
-
-		WebResource service = client.resource(url);
+	
+		WebResource service = client.resource(URL_GET_VEHICLES_FROM_ES);
 
 		ClientResponse response = service.accept("application/json").get(ClientResponse.class);
 
@@ -45,9 +51,7 @@ public class VehicleClient {
 		
 		Client client = Client.create();
 
-		String url = "http://localhost:8080/elasticSearchREST/vehicle/getAll";
-
-		WebResource service = client.resource(url);
+		WebResource service = client.resource(URL_GET_VEHICLES_FROM_DB);
 
 		ClientResponse response = service.accept("application/json").get(ClientResponse.class);
 
@@ -65,8 +69,8 @@ public class VehicleClient {
 	public void saveToDb(String data){
 		
 		Client client = Client.create();
-		final String url = "http://localhost:8080/elasticSearchREST/vehicle/add";
-		WebResource webResource = client.resource(url);
+	
+		WebResource webResource = client.resource(URL_SAVE_VEHICLE_TO_DB);
 		
 		ClientResponse response = webResource.accept("application/json").type("application/json").post(ClientResponse.class, data);
 		if (response.getStatus() != 200) {
@@ -79,38 +83,82 @@ public class VehicleClient {
 		System.out.println(output);
 	}
 	
-	
-	public static void main(String[] args){
+	public void deleteVehicleFromDb(String vehicleId) {
 		
-		Gson gson = new Gson();
 		Client client = Client.create();
-		final String url = "http://localhost:8080/vehicle/add";
-		WebResource webResource = client.resource(url);
-		Vehicle vehicle =new Vehicle();
-		vehicle.setBodyType("test");
-		vehicle.setBrandName("test");
-		vehicle.setColor("test");
-		vehicle.setFuelType("test");
-		vehicle.setRegistracionDate("test");
-		vehicle.setTransmission("test");
-		vehicle.setVehicleLocation("test");
-		vehicle.setId((long) 122);
-		vehicle.setPrice((double)22);
 		
-		String data =gson.toJson(vehicle, Vehicle.class);
+		WebResource webResource = client.resource(URL_DELETE_VEHICLE_FROM_DB);
+		
+		ClientResponse response = webResource.path(vehicleId).delete(ClientResponse.class);
+		
+		if (response.getStatus() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+			     + response.getStatus());
+		}
+
+		System.out.println("Deleted");
+		String output = response.getEntity(String.class);
+		System.out.println(output);
+	}
+	
+	public void updateVehicleToDb(String data){
+		
+		Client client = Client.create();
+		
+		WebResource webResource = client.resource(URL_UPDATE_VEHICLE_TO_DB);
 		ClientResponse response = webResource.accept("application/json").type("application/json").post(ClientResponse.class, data);
 		if (response.getStatus() != 200) {
 			throw new RuntimeException("Failed : HTTP error code : "
 			     + response.getStatus());
 		}
 		
-		System.out.println("Output from Server .... \n");
+		System.out.println("Update go to server .... \n");
 		String output = response.getEntity(String.class);
 		System.out.println(output);
-		
-		
-		
 	}
+	
+	public void transferAllVehiclesFromDbToEs(String index, String type){
+		
+		Client client = Client.create();
+
+		WebResource webResource = client.resource(URL_TRANSFER_ALL_VEHICLES_FROM_DB_TO_ES);
+		ClientResponse response = webResource.path(index).path(type).accept("application/json").type("application/json").post(ClientResponse.class);
+		if (response.getStatus() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+			     + response.getStatus());
+		}
+		
+		System.out.println("Transfer succeed");
+		String output = response.getEntity(String.class);
+		System.out.println(output);
+	}
+	
+	public void transferVehicleFromDbToEs(String index, String type, String id){
+		
+		Client client = Client.create();
+		
+		WebResource webResource = client.resource(URL_TRANSFER_VEHICLE_FROM_DB_TO_ES);
+		ClientResponse response = webResource.path(index).path(type).path(id).accept("application/json").type("application/json").post(ClientResponse.class);
+		
+		if (response.getStatus() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+			     + response.getStatus());
+		}
+		
+		System.out.println("Transfer succeed");
+		String output = response.getEntity(String.class);
+		System.out.println(output);
+	}
+	
+	
+//	public static void main(String[] args){
+//	
+//		transferAllVehiclesFromDbToEs("vehicles", "vehicle");
+//		
+//		
+//		
+//	}
+	
 	
 	
 }

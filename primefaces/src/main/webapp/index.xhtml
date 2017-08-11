@@ -8,13 +8,56 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet name="css/bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet name="css/style.css"></h:outputStylesheet>
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+
+	<title>ElasticSearch Project Home page</title>
 </h:head>
 <h:body>
-	<h1>Hello World PrimeFaces</h1>
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">ElasticSearch FProject</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="http://localhost:8081/primefaces/faces/index.xhtml">Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a
+					href="http://localhost:8081/primefaces/faces/vehicleES.xhtml">ES
+						Vehicles</a></li>
+				<li><a
+					href="http://localhost:8081/primefaces/faces/vehicleDB.xhtml">DB
+						Vehicles</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a
+					href="http://localhost:8081/primefaces/faces/process.xhtml"><span
+						class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
 
-	<h:form>
-	<p:editor value="#{editor.value}" />
-	</h:form>
-
+<p:panel id="panel" header="Something About this project"
+						style="height:500px;position:relative;">
+						
+		<h3> This is a project where I consume RESTful webservices from beck-end.</h3>				
+						<p> This project was made for...... </p>
+						
+						</p:panel>
+	
+<div class="footer">
+       Made by Muresan Andrei, Junior Software Developer
+    </div>
 </h:body>
 </html>
