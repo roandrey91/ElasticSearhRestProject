@@ -48,7 +48,7 @@ public class VehicleBeanView implements Serializable{
 		
 		vehicleClient.saveToDb( gson.toJson(vehicle, Vehicle.class));		  
 		ExternalContext eContext = FacesContext.getCurrentInstance().getExternalContext();
-//		RequestContext.getCurrentInstance().update("form:panel");
+		
 	try {
 		eContext.redirect(eContext.getRequestContextPath() + "/faces/vehicleDB.xhtml");
 	} catch (IOException e) {

@@ -13,7 +13,6 @@ import org.elasticsearch.action.bulk.BulkRequestBuilder;
 import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.search.SearchType;
 import org.elasticsearch.action.update.UpdateResponse;
@@ -22,6 +21,7 @@ import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.sort.SortOrder;
 
 import com.fortech.elasticSearchREST.model.VehicleES;
 import com.google.gson.Gson;
@@ -67,7 +67,7 @@ public class ElasticSearchService {
 	@SuppressWarnings("unused")
 	public void bulkAddIndex(String index, String typeName, List<VehicleES> vehicleES){
 		BulkRequestBuilder bulkRequestBuilder = esClient.prepareBulk();
-		vehicleES.forEach(vehicleES1 -> bulkRequestBuilder.add(esClient.prepareIndex(index, typeName).setId(vehicleES1.getId().toString())
+		vehicleES.forEach(vehicleES1 -> bulkRequestBuilder.add(esClient.prepareIndex(index, typeName, vehicleES1.getElasticSearchId())
 				.setSource(gson.toJson(vehicleES1))));
 		BulkResponse responses = bulkRequestBuilder.get();
 	}
@@ -83,16 +83,15 @@ public class ElasticSearchService {
 	 *
 	 * @param index Name of the index/alias.
 	 * @param type  Name of the type.
-	 * @param id    Unique ID for document
 	 * @param data  Data in JSON format
 	 * @throws InterruptedException .
 	 */
-	@SuppressWarnings("unused")
 	public void createIndex(String index, String type, String id, String data) throws InterruptedException {
-		IndexResponse response = esClient.prepareIndex(index, type, id).setSource(data).get();
+		esClient.prepareIndex(index, type, id).setSource(data).get();
 		Thread.sleep(2000);
 	}
 
+	
 	/**
 	 * Update data to the ElasticSearch.
 	 *
@@ -139,7 +138,7 @@ public class ElasticSearchService {
 	public void removeDocument(String index, String type, String id) {
 		esClient.prepareDelete(index, type, id).execute().actionGet();
 	}
-
+		
 	/**
 	 * Simple way to get a document from ElasticSearch.
 	 *
@@ -172,10 +171,47 @@ public class ElasticSearchService {
 		while (response == null || response.getHits().hits().length != 0) {
 			esData.clear();
 			response = esClient.prepareSearch(indexName).setTypes(typeName).setQuery(QueryBuilders.matchAllQuery())
-					.setSize(scrollSize).setFrom(i * scrollSize).execute().actionGet();
+					.setSize(scrollSize).addSort("id", SortOrder.ASC).setFrom(i * scrollSize).execute().actionGet();
+			for (SearchHit hit : response.getHits()) {
+	
+				esData.add(hit.getSourceAsString());
+		
+			}
+			i++;
+
+			for (String source : esData) {
+				VehicleES vehicleES = gson.fromJson(source, VehicleES.class);
+				vehicles.add(vehicleES);
+			}
+		}
+		return vehicles;
+	}
+
+	/**
+	 * Search documents with filter.
+	 *
+	 * @param index Name of the index/alias.
+	 * @param type  Name of the type.
+	 * @param field Name of field.
+	 * @param value Name of field value.
+	 * @return List of Vehicle Object in Json data.
+	 */
+	public List<VehicleES> getAllVehiclesByField(String index, String type, String field, String value){
+		int scrollSize = 1000;
+		SearchResponse response = null;
+		int i = 0;
+		List<String> esData = new ArrayList<>();
+		List<VehicleES> vehicles = new ArrayList<>();
+		QueryBuilder queryBuilder = new MatchQueryBuilder(field, value);
+
+		while (response == null || response.getHits().hits().length != 0) {
+			esData.clear();
+			response = esClient.prepareSearch(index).setTypes(type).setSearchType(SearchType.QUERY_AND_FETCH).setQuery(queryBuilder)
+					.setSize(scrollSize).addSort("id", SortOrder.ASC).setFrom(i * scrollSize).execute().actionGet();
 			for (SearchHit hit : response.getHits()) {
 
 				esData.add(hit.getSourceAsString());
+			
 			}
 			i++;
 
@@ -207,5 +243,6 @@ public class ElasticSearchService {
 
 		return gson.fromJson(stringHit, VehicleES.class);
 	}
+	
 
 }

@@ -41,4 +41,12 @@ public class CarService implements Serializable {
 	public void transferOneVehicleFromDbToEs(String index, String type, String id){
 		client.transferVehicleFromDbToEs(index, type, id);
 	}
+	
+	public void saveToES(String index, String type, String data){
+		client.saveVehicleToES(index, type, data);
+	}
+
+	public void deleteFromES(String vehicleId) {
+		client.deleteVehicleFromES(vehicleId);	
+	}
 }

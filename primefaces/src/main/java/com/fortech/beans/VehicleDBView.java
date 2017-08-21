@@ -53,7 +53,7 @@ public class VehicleDBView implements Serializable {
     public void transferOne(Vehicle vehicle){
     	FacesMessage msg = new FacesMessage("Vehicle Transfered Successfully", vehicle.getId().toString() );
     	FacesContext.getCurrentInstance().addMessage(null, msg);
-    	service.transferOneVehicleFromDbToEs(INDEX_NAME, INDEX_NAME, vehicle.getId().toString());
+    	service.transferOneVehicleFromDbToEs(INDEX_NAME, TYPE_NAME, vehicle.getId().toString());
     }
 	public void onRowEdit(RowEditEvent event) {
 		Vehicle vehicle = (Vehicle) event.getObject();

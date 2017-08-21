@@ -7,32 +7,49 @@ package com.fortech.elasticSearchREST.model;
  */
 public class VehicleES {
 
+	private String elasticSearchId;
+
 	private Long id;
-	
+
 	private String brandName;
-	
+
 	private String bodyType;
-	
+
 	private String fuelType;
-	
+
 	private String transmission;
-	
+
 	private String registracionDate;
 
 	private String color;
-	
+
 	private Double price;
-	
+
 	private String vehicleLocation;
 
 	private String[] tags;
-	
+
 	public VehicleES() {
-		
+
 	}
 
 	public VehicleES(Long id, String brandName, String bodyType, String fuelType, String transmission,
 			String registracionDate, String color, Double price, String vehicleLocation, String[] tags) {
+		this.id = id;
+		this.brandName = brandName;
+		this.bodyType = bodyType;
+		this.fuelType = fuelType;
+		this.transmission = transmission;
+		this.registracionDate = registracionDate;
+		this.color = color;
+		this.price = price;
+		this.vehicleLocation = vehicleLocation;
+		this.tags = tags;
+	}
+	
+	public VehicleES(String elasticSearchId, Long id, String brandName, String bodyType, String fuelType, String transmission,
+			String registracionDate, String color, Double price, String vehicleLocation, String[] tags) {
+		this.elasticSearchId = elasticSearchId;
 		this.id = id;
 		this.brandName = brandName;
 		this.bodyType = bodyType;
@@ -124,7 +141,13 @@ public class VehicleES {
 	public void setTags(String[] tags) {
 		this.tags = tags;
 	}
-	
-	
-	
+
+	public String getElasticSearchId() {
+		return elasticSearchId;
+	}
+
+	public void setElasticSearchId(String elasticSearchId) {
+		this.elasticSearchId = elasticSearchId;
+	}
+
 }

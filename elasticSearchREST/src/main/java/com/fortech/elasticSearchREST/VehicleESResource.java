@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import com.fortech.elasticSearchREST.com.fortech.elasticSearchREST.dbes.VehicleToVehicleES;
 import com.fortech.elasticSearchREST.model.VehicleES;
 import com.fortech.elasticSearchREST.services.ElasticSearchService;
 import com.google.gson.Gson;
@@ -45,7 +46,7 @@ public class VehicleESResource {
 		String message = " deleted successful";
 		return Response.ok().entity(message).build();
 	}
-
+		
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -71,11 +72,13 @@ public class VehicleESResource {
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
-	@Path("add/{index}/{type}/{id}")
+	@Path("add/{index}/{type}")
 	public Response addVehicle(@PathParam("index") String index, @PathParam("type") String type,
-			@PathParam("id") String id, VehicleES vehicle) throws InterruptedException 
+			 VehicleES vehicle) throws InterruptedException 
 	{
-		elasticSearchService.createIndex(index, type, id, gson.toJson(vehicle, VehicleES.class));
+		String esId = VehicleToVehicleES.createId(vehicle.getId().toString(), vehicle.getRegistracionDate());
+		vehicle.setElasticSearchId(esId);
+		elasticSearchService.createIndex(index, type, esId, gson.toJson(vehicle, VehicleES.class));
 		return Response.ok().build();
 	}
 
@@ -96,6 +99,14 @@ public class VehicleESResource {
 		return Response.ok().entity(elasticSearchService.findDocumentByFilter(index, type, field, fieldValue)).build();
 	}
 
+	@GET
+	@Produces("application/json")
+	@Path("getall/{index}/{type}/{field}/{fieldValue}")
+	public List<VehicleES> getVehicleByFilter(@PathParam("index") String index, @PathParam("type") String type,
+			@PathParam("field") String field, @PathParam("fieldValue") String fieldValue) {
+		return elasticSearchService.getAllVehiclesByField(index, type, field, fieldValue);
+	}
+	
 	@GET
 	@Produces("application/json")
 	@Path("{index}/{type}")
