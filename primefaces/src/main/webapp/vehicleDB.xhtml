@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -249,4 +250,257 @@
 </div>
 </div>	
 </h:body>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta http-equiv="X-UA-Conpatible" content="IE=edge" />
+	<h:outputStylesheet type="text/css" rel="stylesheet" name="css/bootstrap.min.css"></h:outputStylesheet>
+	<h:outputStylesheet type="text/css" rel="stylesheet" name="css/style.css"></h:outputStylesheet>
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+
+	<title>List of Cars form ElasticSearch</title>
+</h:head>
+
+<h:body>
+
+	<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target="#myNavbar">
+				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">ElasticSearch FProject</a>
+		</div>
+		<div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li><a
+					href="http://localhost:8081/primefaces/faces/index.xhtml"><span class="glyphicon glyphicon-home"> </span> Home</a></li>
+				<li><a href="#">About</a></li>
+				<li><a	href="http://localhost:8081/primefaces/faces/vehicleES.xhtml">ES
+						Vehicles</a></li>
+				<li><a
+					href="http://localhost:8081/primefaces/faces/vehicleDB.xhtml">DB
+						Vehicles</a></li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li><a
+					href="http://localhost:8081/primefaces/faces/process.xhtml"><span
+						class="glyphicon glyphicon-log-in"></span> Login</a></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+
+	<div class="table-responsive">
+	<h:form id="form">
+	<p:growl id="msgs" showDetail="true" />
+	
+	<h:panelGroup id="panelTableHolder" layout="block">
+	
+		<p:dataTable tableStyleCalss="table table-striped" var="car" rows="7" editable="true" style="margin-bottom:20px"
+			paginator="true"
+			paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			rowsPerPageTemplate="5,10,15" value="#{dtVehicleDBView.cars}">
+
+			<f:facet name="header">
+        List of Cars from MySQL 
+     </f:facet>
+
+			<p:ajax event="rowEdit" listener="#{dtVehicleDBView.onRowEdit}"
+				update=":form:msgs" />
+			<p:ajax event="rowEditCancel" listener="#{dtVehicleDBView.onRowCancel}"
+				update=":form:msgs" />
+				
+				
+			<p:column headerText="Id">
+				<h:outputText value="#{car.id}" />
+			</p:column>
+
+			<p:column headerText="brandName">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{car.brandName}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{car.brandName}" style="width:100%">
+							<f:selectItem itemLabel="BMW" itemValue="BMW" />
+							<f:selectItem itemLabel="Mercedes-Benz" itemValue="Mercedes-Benz" />
+							<f:selectItem itemLabel="Ford" itemValue="Ford" />
+							<f:selectItem itemLabel="Ferrari" itemValue="Ferrari" />
+							<f:selectItem itemLabel="Aston Martin" itemValue="Aston Martin" />
+							<f:selectItem itemLabel="Lamborghini" itemValue="Lamborghini" />
+							<f:selectItem itemLabel="Porsche" itemValue="Porsche" />
+							<f:selectItem itemLabel="Audi" itemValue="Audi" />
+							<f:selectItem itemLabel="Volkswagen" itemValue="Volkswagen" />
+						</p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="bodyType">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{car.bodyType}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{car.bodyType}" style="width:100%">
+								<f:selectItem itemLabel="SUV" itemValue="SUV" />
+								<f:selectItem itemLabel="Truck" itemValue="Truck" />
+								<f:selectItem itemLabel="Sedan" itemValue="Sedan" />
+								<f:selectItem itemLabel="Van" itemValue="Van" />
+								<f:selectItem itemLabel="Coupe" itemValue="Coupe" />
+								<f:selectItem itemLabel="Sports Car" itemValue="Sports Car" />
+								<f:selectItem itemLabel="Diesel" itemValue="Diesel" />
+								<f:selectItem itemLabel="Crossover" itemValue="Crossover" />
+								<f:selectItem itemLabel="Luxury Car" itemValue="Luxury Car" />
+								<f:selectItem itemLabel="Hybrid/Electric"
+									itemValue="Hybrid/Electric" />
+								<f:selectItem itemLabel="Hatchback" itemValue="Hatchback" />
+							</p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="FuelType">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{car.fuelType}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{car.fuelType}" style="width:100%">
+								<f:selectItem itemLabel="Gasoline" itemValue="Gasoline" />
+								<f:selectItem itemLabel="Ethanol" itemValue="Ethanol" />
+								<f:selectItem itemLabel="Liquefied Petroleum"
+									itemValue="Liquefied Petroleum" />
+								<f:selectItem itemLabel="Diesel" itemValue="Diesel" />
+								<f:selectItem itemLabel="Natural gas" itemValue="Natural gas" />
+								<f:selectItem itemLabel="Biodiesel" itemValue="Biodiesel" />
+								<f:selectItem itemLabel="Benzine" itemValue="Benzine" />
+							</p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Transmission">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{car.transmission}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu  value="#{car.transmission}" style="width:100%">
+								<f:selectItem itemLabel="Manual" itemValue="Manual" />
+								<f:selectItem itemLabel="Automatic" itemValue="Automatic" />
+								<f:selectItem itemLabel="Semi-automatic"
+									itemValue="Semi-automatic" />
+							</p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="RegistracionDate">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{car.registracionDate}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:inputMask value="#{car.registracionDate}"
+								id="registracionDate" mask="99-99-9999">
+								<p:watermark value="MM/DD/YYYY" for="registracionDate" />
+							</p:inputMask>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Color">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{car.color}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{car.color}" style="width:100%">
+								<f:selectItem itemLabel="Black" itemValue="Black" />
+								<f:selectItem itemLabel="Blue" itemValue="Blue" />
+								<f:selectItem itemLabel="Green" itemValue="Green" />
+								<f:selectItem itemLabel="Red" itemValue="Red" />
+								<f:selectItem itemLabel="Yellow" itemValue="Yellow" />
+								<f:selectItem itemLabel="White" itemValue="White" />
+							</p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="Price">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{car.price}" >
+						<f:convertNumber type="currency" currencySymbol="€" />
+						</h:outputText>
+					</f:facet>
+					<f:facet name="input">
+						<p:inputNumber value="#{car.price}" id="price"
+								symbol="€" decimalSeparator="," thousandSeparator="."></p:inputNumber>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column headerText="VehicleLocation">
+				<p:cellEditor>
+					<f:facet name="output">
+						<h:outputText value="#{car.vehicleLocation}" />
+					</f:facet>
+					<f:facet name="input">
+						<p:selectOneMenu value="#{car.vehicleLocation}"
+								id="vehicleLocation" styleClass="full-width">
+								<f:selectItem itemLabel="Austria" itemValue="Austria" />
+								<f:selectItem itemLabel="Belgium" itemValue="Belgium" />
+								<f:selectItem itemLabel="Denmark" itemValue="Denmark" />
+								<f:selectItem itemLabel="France" itemValue="France" />
+								<f:selectItem itemLabel="Germany" itemValue="Germany" />
+								<f:selectItem itemLabel="Italy" itemValue="Italy" />
+								<f:selectItem itemLabel="Romania" itemValue="Romania" />
+								<f:selectItem itemLabel="United Kingdom"
+									itemValue="United Kingdom" />
+							</p:selectOneMenu>
+					</f:facet>
+				</p:cellEditor>
+			</p:column>
+			<p:column style="width:50px" >
+				<p:commandButton icon="ui-icon-trash" title="Delete"
+					actionListener="#{dtVehicleDBView.remove(car)}"   update=":form:msgs" ajax="false"  />
+			</p:column>
+			<p:column style="width:50px" >
+				<p:commandButton icon="ui-icon-check" title="Trasfer Vehicle"
+					actionListener="#{dtVehicleDBView.transferOne(car)}"   update=":form:msgs" ajax="false"  />
+			</p:column>
+			<p:column  style="width:32px">
+				<p:rowEditor />
+			</p:column>
+		
+			
+</p:dataTable>
+	
+		
+	
+			</h:panelGroup>
+			<div align="right">
+		<p:button
+			href="http://localhost:8081/primefaces/faces/addingVehicle.xhtml"
+			value="Add vehicle" />
+			<p:commandButton  action="#{dtVehicleDBView.transferAll}" value="Transfer All Vehicle to ES" update=":form:msgs"  ajax="false"></p:commandButton>
+	</div>
+		</h:form>
+	
+	<div class="row"></div>
+	<div class="ui-g-12 ui-md-6 ui-lg-4">
+  <p>Made by Muresan Andrei, Junior Software
+		Developer</p>
+</div>
+</div>	
+</h:body>
+>>>>>>> b9aa13bfbfeaeaeeb7262f65775760c048bdfc72
 </html>
