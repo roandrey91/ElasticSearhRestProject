@@ -11,6 +11,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 
 import com.fortech.elasticSearchREST.com.fortech.elasticSearchREST.dbes.VehicleToVehicleES;
@@ -46,7 +47,7 @@ public class VehicleESResource {
 		String message = " deleted successful";
 		return Response.ok().entity(message).build();
 	}
-		
+
 	@POST
 	@Consumes("application/json")
 	@Produces("application/json")
@@ -74,7 +75,7 @@ public class VehicleESResource {
 	@Produces("application/json")
 	@Path("add/{index}/{type}")
 	public Response addVehicle(@PathParam("index") String index, @PathParam("type") String type,
-			 VehicleES vehicle) throws InterruptedException 
+			VehicleES vehicle) throws InterruptedException 
 	{
 		String esId = VehicleToVehicleES.createId(vehicle.getId().toString(), vehicle.getRegistracionDate());
 		vehicle.setElasticSearchId(esId);
@@ -106,7 +107,7 @@ public class VehicleESResource {
 			@PathParam("field") String field, @PathParam("fieldValue") String fieldValue) {
 		return elasticSearchService.getAllVehiclesByField(index, type, field, fieldValue);
 	}
-	
+
 	@GET
 	@Produces("application/json")
 	@Path("{index}/{type}")
@@ -114,4 +115,30 @@ public class VehicleESResource {
 		return elasticSearchService.getAllVehicles(index, type);
 	}
 
+	@GET
+	@Produces("application/json")
+	@Path("count/{index}/{type}/{field}/{value}")
+	public Response getSearchCount(@PathParam("index") String index, @PathParam("type") String type,
+			@PathParam("field") String field, @PathParam("value") String value)
+	{
+		Long countNumber = elasticSearchService.searchCounter(index, type, field, value);
+		return Response.ok().entity(gson.toJson(countNumber)).build();
+	}
+
+	@GET
+	@Produces("application/json")
+	@Path("fieldvalue/{index}/{type}/{field}")
+	public List<String> getValueOfField(@PathParam("index") String index, @PathParam("type") String type,
+			@PathParam("field") String field ) {
+		return elasticSearchService.getAllValueOfField(index, type, field);
+	}
+	
+	@GET
+	@Produces("application/json")
+	@Path("findMinMaxValue/{index}/{type}/{field}")
+	public List<VehicleES> getValueFromESWithMinMaxQueryFromASpecifiedField(@PathParam("index") String index, @PathParam("type") String type,
+			@PathParam("field") String field, @QueryParam("minValue") Double minValue, @QueryParam("maxValue") Double maxValue ) {
+				
+		return elasticSearchService.getAllValueFromESWithMinMaxValueFromAField(index, type, field, minValue, minValue);
+	}
 }

@@ -18,7 +18,7 @@
 	<title>ElasticSearch Project Home page</title>
 </h:head>
 <h:body>
-<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -30,7 +30,8 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="http://localhost:8081/primefaces/faces/index.xhtml">Home</a></li>
+				<li class="active"><a
+					href="http://localhost:8081/primefaces/faces/index.xhtml">Home</a></li>
 				<li><a href="#">About</a></li>
 				<li><a
 					href="http://localhost:8081/primefaces/faces/vehicleES.xhtml">ES
@@ -47,17 +48,40 @@
 		</div>
 	</div>
 	</nav>
+	<h:form id="form" enctype="multipart/form-data">
+		<p:growl id="messages" showDetail="true" />
+		<p:fileUpload fileUploadListener="#{fileUpload.upload}"
+			update="content messages" oncomplete="PF('dlg').show()" />
+		<p:dialog header="#{fileUpload.zipFileName}" resizable="false"
+			showEffect="fade" widgetVar="dlg">
+			<p:panel id="content" header="#{fileUpload.zipFileName}"
+				style="border:none;">
+				<p:dataList value="#{fileUpload.zipContent}" var="zip"
+					type="definition">
+                #{zip}
+    </p:dataList>
+				<p:dataList value="#{fileUpload.fileTxtContent}" var="txt"
+					type="definition" escape="false">
 
-<p:panel id="panel" header="Something About this project"
-						style="height:500px;position:relative;">
-						
-		<h3> This is a project where I consume RESTful webservices from beck-end.</h3>				
-						<p> This project was made for...... </p>
-						
-						</p:panel>
-	
-<div class="footer">
-       Made by Muresan Andrei, Junior Software Developer
-    </div>
+					<p:accordionPanel>
+						<p:tab title="#{fileUpload.txtFileContent}">
+							<h:outputText value="#{txt}" escape="false"
+								style="white-space: pre-wrap;word-wrap: break-word;">
+							</h:outputText>
+						</p:tab>
+					</p:accordionPanel>
+				</p:dataList>
+
+			
+				<ui:repeat var="image" value="#{fileUpload.stre}">
+					<p:graphicImage value="/images/#{image}" width="150" />
+				</ui:repeat>
+			</p:panel>
+		</p:dialog>
+	</h:form>
+
+
+	<div class="footer">Made by Muresan Andrei, Junior Software
+		Developer</div>
 </h:body>
 </html>

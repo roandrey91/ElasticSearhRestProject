@@ -18,7 +18,7 @@
 	<title>ElasticSearch Project Home page</title>
 </h:head>
 <h:body>
-<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -30,7 +30,8 @@
 		</div>
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="http://localhost:8081/primefaces/faces/index.xhtml">Home</a></li>
+				<li class="active"><a
+					href="http://localhost:8081/primefaces/faces/index.xhtml">Home</a></li>
 				<li><a href="#">About</a></li>
 				<li><a
 					href="http://localhost:8081/primefaces/faces/vehicleES.xhtml">ES
@@ -47,17 +48,19 @@
 		</div>
 	</div>
 	</nav>
+	<h:form id="form" enctype="multipart/form-data">
+			
+		 <p:fileUpload fileUploadListener="#{fileUploadController.uploadListener}"></p:fileUpload>
+		<p:panel id="content" style="border:none;">
+			<ui:repeat value="#{fileUpload.zipContent}" var="contenta">
+           <h:outputText value="#{contenta}"/>
+            </ui:repeat>
+		</p:panel>
 
-<p:panel id="panel" header="Something About this project"
-						style="height:500px;position:relative;">
-						
-		<h3> This is a project where I consume RESTful webservices from beck-end.</h3>				
-						<p> This project was made for...... </p>
-						
-						</p:panel>
-	
-<div class="footer">
-       Made by Muresan Andrei, Junior Software Developer
-    </div>
+	</h:form>
+
+
+	<div class="footer">Made by Muresan Andrei, Junior Software
+		Developer</div>
 </h:body>
 </html>

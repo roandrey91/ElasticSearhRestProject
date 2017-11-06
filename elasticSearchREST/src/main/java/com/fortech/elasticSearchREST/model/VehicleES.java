@@ -1,10 +1,15 @@
 package com.fortech.elasticSearchREST.model;
 
+import java.util.Arrays;
+
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  * 
  * @author andreig.muresan
  *
  */
+@XmlRootElement
 public class VehicleES {
 
 	private String elasticSearchId;
@@ -150,4 +155,13 @@ public class VehicleES {
 		this.elasticSearchId = elasticSearchId;
 	}
 
+	@Override
+	public String toString() {
+		return "VehicleES [elasticSearchId=" + elasticSearchId + ", id=" + id + ", brandName=" + brandName
+				+ ", bodyType=" + bodyType + ", fuelType=" + fuelType + ", transmission=" + transmission
+				+ ", registracionDate=" + registracionDate + ", color=" + color + ", price=" + price
+				+ ", vehicleLocation=" + vehicleLocation + ", tags=" + Arrays.toString(tags) + "]";
+	}
+
+	
 }

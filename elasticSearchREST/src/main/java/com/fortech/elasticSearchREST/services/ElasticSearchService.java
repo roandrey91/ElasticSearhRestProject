@@ -20,7 +20,11 @@ import org.elasticsearch.client.Client;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms;
+import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
 import org.elasticsearch.search.sort.SortOrder;
 
 import com.fortech.elasticSearchREST.model.VehicleES;
@@ -91,7 +95,7 @@ public class ElasticSearchService {
 		Thread.sleep(2000);
 	}
 
-	
+
 	/**
 	 * Update data to the ElasticSearch.
 	 *
@@ -138,7 +142,7 @@ public class ElasticSearchService {
 	public void removeDocument(String index, String type, String id) {
 		esClient.prepareDelete(index, type, id).execute().actionGet();
 	}
-		
+
 	/**
 	 * Simple way to get a document from ElasticSearch.
 	 *
@@ -173,9 +177,9 @@ public class ElasticSearchService {
 			response = esClient.prepareSearch(indexName).setTypes(typeName).setQuery(QueryBuilders.matchAllQuery())
 					.setSize(scrollSize).addSort("id", SortOrder.ASC).setFrom(i * scrollSize).execute().actionGet();
 			for (SearchHit hit : response.getHits()) {
-	
+
 				esData.add(hit.getSourceAsString());
-		
+
 			}
 			i++;
 
@@ -211,7 +215,7 @@ public class ElasticSearchService {
 			for (SearchHit hit : response.getHits()) {
 
 				esData.add(hit.getSourceAsString());
-			
+
 			}
 			i++;
 
@@ -243,6 +247,73 @@ public class ElasticSearchService {
 
 		return gson.fromJson(stringHit, VehicleES.class);
 	}
-	
 
+	/**
+	 * Counts a search result according to field and value.  
+	 * 
+	 * @param index Name of the index/alias.
+	 * @param type  Name of the type.
+	 * @param field Name of field.
+	 * @param value Value for field.
+	 * @return long number.
+	 */
+	public long searchCounter(String index, String type, String field, String value){
+		QueryBuilder queryBuilder = new MatchQueryBuilder(field, value);
+		return esClient.prepareSearch(index).setTypes(type).setSize(0).setQuery(queryBuilder).get().getHits().getTotalHits();
+	}
+
+	/**
+	 * According to field this method return a list of values from that field
+	 * 
+	 * @param index Name of index/alias.
+	 * @param type	Name of type.
+	 * @param field	Name of field.
+	 * @return list of String values.
+	 */
+	public List<String> getAllValueOfField(String index, String type, String field){
+		List<String> values = new ArrayList<>();
+		SearchResponse response = null;
+
+		response = esClient.prepareSearch(index).setTypes(type).setQuery(QueryBuilders.matchAllQuery())
+				.addAggregation(AggregationBuilders.terms("agg1").field(field)
+						).execute().actionGet();
+		Terms agg1 = response.getAggregations().get("agg1");
+		for(Bucket value :agg1.getBuckets()){
+			values.add(value.getKeyAsString().substring(0, 1).toUpperCase() +value.getKeyAsString().substring(1).toLowerCase());
+		}
+
+		return values;
+	}
+	/**
+	 * 
+	 * @param index
+	 * @param type
+	 * @param field
+	 * @param minValue
+	 * @param maxValue
+	 * @return
+	 */
+	public List<VehicleES> getAllValueFromESWithMinMaxValueFromAField(String index, String type, String field, Double minValue, Double maxValue){
+		int scrollSize = 1000;
+		List<String> values = new ArrayList<>();
+		List<VehicleES> vehicles = new ArrayList<>();
+	
+		SearchResponse response = null;
+		
+		RangeQueryBuilder rangeQueryBuilder = QueryBuilders.rangeQuery(field).gte(minValue).lte(maxValue);
+		values.clear();
+		response = esClient.prepareSearch(index).setTypes(type).setQuery(rangeQueryBuilder)
+				.setFrom(0).setSize(scrollSize).execute().actionGet();
+		System.out.println(response);
+		for(SearchHit hit : response.getHits()) {
+			values.add(hit.getSourceAsString());
+		}
+		for (String source : values) {
+			VehicleES vehicleES = gson.fromJson(source, VehicleES.class);
+			vehicles.add(vehicleES);
+		}
+		
+		return vehicles;
+	}
+	
 }

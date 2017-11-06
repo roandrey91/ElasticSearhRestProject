@@ -7,6 +7,72 @@
 
 	<display-name>PrimeFaces Web Application</display-name>
 
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>vehicleDbView</web-resource-name>
+			<url-pattern>/faces/vehicleDB.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>users</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>vehicleESView</web-resource-name>
+			<url-pattern>/faces/vehicleES.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>users</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>searchVehicle</web-resource-name>
+			<url-pattern>/faces/searchVehicle.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>users</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>addingVehicleToSQL</web-resource-name>
+			<url-pattern>/faces/addingVehicle.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>users</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>addingVehicleToES</web-resource-name>
+			<url-pattern>/faces/addingVehicleToES.xhtml</url-pattern>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>users</role-name>
+		</auth-constraint>
+	</security-constraint>
+
+
+
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+
+	<filter>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>PrimeFaces FileUpload Filter</filter-name>
+		<servlet-name>Faces Servlet</servlet-name>
+	</filter-mapping>
+
 	<!-- Change to "Production" when you are ready to deploy -->
 	<context-param>
 		<param-name>javax.faces.PROJECT_STAGE</param-name>
@@ -14,9 +80,12 @@
 	</context-param>
 	<context-param>
 		<param-name>primefaces.THEME</param-name>
-		<param-value>cruze</param-value>
+		<param-value>home</param-value>
 	</context-param>
-
+	<context-param>
+		<param-name>primefaces.UPLOADER</param-name>
+		<param-value>commons</param-value>
+	</context-param>
 	<!-- Welcome page -->
 	<welcome-file-list>
 		<welcome-file>faces/index.xhtml</welcome-file>
@@ -46,6 +115,7 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>*.xhtml</url-pattern>
 	</servlet-mapping>
-	
+
+
 
 </web-app>

@@ -8,4 +8,6 @@
 		<jta-data-source>vehicle</jta-data-source>
 		<class>com.fortech.elasticSearchREST.model.Vehicle</class>
 		</persistence-unit>
+				
+		
 </persistence>

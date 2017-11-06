@@ -65,7 +65,7 @@
         List of Cars from ElasticSearch
     </f:facet>
 
-					<p:column headerText="Id"  sortBy="#{car.id}">
+					<p:column headerText="Id" sortBy="#{car.id}">
 						<h:outputText value="#{car.id}" />
 					</p:column>
 
@@ -85,7 +85,8 @@
 						<h:outputText value="#{car.transmission}" />
 					</p:column>
 
-					<p:column headerText="RegistracionDate" sortBy="#{car.registracionDate}">
+					<p:column headerText="RegistracionDate"
+						sortBy="#{car.registracionDate}">
 						<h:outputText value="#{car.registracionDate}" />
 					</p:column>
 
@@ -94,26 +95,60 @@
 					</p:column>
 
 					<p:column headerText="Price" sortBy="#{car.price}">
-						<h:outputText value="#{car.price}" />
+
+						<h:outputText value="#{car.price}">
+							<f:convertNumber type="currency" currencySymbol="€ " />
+						</h:outputText>
 					</p:column>
 
-					<p:column headerText="VehicleLocation" sortBy="#{car.vehicleLocation}">
+					<p:column headerText="VehicleLocation"
+						sortBy="#{car.vehicleLocation}">
 						<h:outputText value="#{car.vehicleLocation}" />
 					</p:column>
 
 					<p:column headerText="Tags">
 						<h:outputText value="#{car.tags}" />
 					</p:column>
+					<p:column style="width:50px">
 
+						<p:commandButton icon="ui-icon-trash" title="Delete"
+							onclick="PF('deleteConfirm').show()">
+						</p:commandButton>
+						<p:confirmDialog header="Confirmation"
+							message="Delete row with id - #{car.id} ?" showEffect="fade"
+							hideEffect="explode" widgetVar="deleteConfirm" severity="alert">
+							<p:commandButton value="Yes"
+								action="#{dtVehicleESView.remove(car)}" update=":form:msgs"
+								oncomplete="PF('deleteConfirm').hide()"
+								styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+							<p:commandButton value="No" styleClass="ui-confirmdialog-no"
+								icon="ui-icon-close" oncomplete="PF('deleteConfirm').hide()" />
+						</p:confirmDialog>
+					</p:column>
 				</p:dataTable>
-				
-				</h:panelGroup>
+
+			</h:panelGroup>
 			<div align="right">
-		<p:button
-			href="http://localhost:8081/primefaces/faces/addingVehicleToES.xhtml"
-			value="Add vehicle" />
+				<p:button
+					href="http://localhost:8081/primefaces/faces/addingVehicleToES.xhtml"
+					value="Add vehicle" />
+				<p:button
+					href="http://localhost:8081/primefaces/faces/searchVehicle.xhtml"
+					value="Search Vehicle" />
 			</div>
 		</h:form>
+		
+		<h:form enctype="multipart/form-data">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:fileUpload value="#{fileUpload.file}" mode="simple"
+				skinSimple="true" />
+
+			<p:commandButton value="Submit" ajax="false"
+				actionListener="#{fileUpload.upload}" disabled="true" />
+		</h:form>
+
+
 	</div>
 
 	<div class="ui-g-12">Made by Muresan Andrei, Junior Software

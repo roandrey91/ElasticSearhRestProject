@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package com.fortech.beans;
 
 import java.io.IOException;
@@ -29,7 +28,6 @@ public class VehicleEsBeanView implements Serializable {
 
 	private final String INDEX_NAME = "vehicles";
 	private final String TYPE_NAME = "vehicle";
-
 
 	private String brandName;
 	private String bodyType;
@@ -172,33 +170,4 @@ public class VehicleEsBeanView implements Serializable {
 		this.selectedTags = selectedTags;
 	}
 
-
-
-
-
 }
-=======
-package com.fortech.beans;
-
-import java.io.Serializable;
-
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
-
-/**
- * @author andreig.muresan
- */
-
-@ManagedBean(name="vehicleES")
-@RequestScoped
-public class VehicleEsBeanView implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-	
-	
-	
-	
-	
-	
-}
->>>>>>> b9aa13bfbfeaeaeeb7262f65775760c048bdfc72
